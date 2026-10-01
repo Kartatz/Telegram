@@ -3,12 +3,7 @@ package org.telegram.ui.Components.Paint;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 
-import com.google.android.gms.vision.face.Face;
-import com.google.android.gms.vision.face.Landmark;
-
 import org.telegram.ui.Components.Size;
-
-import java.util.List;
 
 public class PhotoFace {
 
@@ -23,41 +18,7 @@ public class PhotoFace {
     private PointF mouthPoint;
     private PointF chinPoint;
 
-    public PhotoFace(Face face, Bitmap sourceBitmap, Size targetSize, boolean sideward) {
-        List<Landmark> landmarks = face.getLandmarks();
-
-        PointF leftEyePoint = null;
-        PointF rightEyePoint = null;
-
-        PointF leftMouthPoint = null;
-        PointF rightMouthPoint = null;
-
-        for (Landmark landmark : landmarks) {
-            PointF point = landmark.getPosition();
-
-            switch (landmark.getType()) {
-                case Landmark.LEFT_EYE: {
-                    leftEyePoint = transposePoint(point, sourceBitmap, targetSize, sideward);
-                }
-                break;
-
-                case Landmark.RIGHT_EYE: {
-                    rightEyePoint = transposePoint(point, sourceBitmap, targetSize, sideward);
-                }
-                break;
-
-                case Landmark.LEFT_MOUTH: {
-                    leftMouthPoint = transposePoint(point, sourceBitmap, targetSize, sideward);
-                }
-                break;
-
-                case Landmark.RIGHT_MOUTH: {
-                    rightMouthPoint = transposePoint(point, sourceBitmap, targetSize, sideward);
-                }
-                break;
-            }
-        }
-
+    public PhotoFace(PointF leftEyePoint, PointF rightEyePoint, PointF leftMouthPoint, PointF rightMouthPoint, Bitmap sourceBitmap, Size targetSize, boolean sideward) {
         if (leftEyePoint != null && rightEyePoint != null) {
             if (leftEyePoint.x < rightEyePoint.x) {
                 PointF temp = leftEyePoint;
@@ -143,4 +104,4 @@ public class PhotoFace {
     public float getAngle() {
         return angle;
     }
- }
+}
