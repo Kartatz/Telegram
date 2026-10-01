@@ -165,7 +165,7 @@ public abstract class JobIntentService extends Service {
                     // Keep the device awake, but only for at most 10 minutes at a time
                     // (Similar to JobScheduler.)
                     try {
-                        mRunWakeLock.acquire(2 * 60 * 1000L);
+                        mRunWakeLock.acquire(2 * 15 * 1000L);
                         mLaunchWakeLock.release();
                     } catch (Throwable e) {
                         FileLog.e(e);

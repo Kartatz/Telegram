@@ -73,7 +73,7 @@ public class KeepAliveJob extends JobIntentService {
         if (BuildVars.LOGS_ENABLED) {
             FileLog.d("started keep-alive job");
         }
-        Utilities.globalQueue.postRunnable(finishJobByTimeoutRunnable, 60 * 1000);
+        Utilities.globalQueue.postRunnable(finishJobByTimeoutRunnable, 10 * 1000);
         try {
             countDownLatch.await();
         } catch (Throwable ignore) {
