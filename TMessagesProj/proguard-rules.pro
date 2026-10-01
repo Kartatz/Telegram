@@ -54,3 +54,5 @@
 # Use -keep to explicitly keep any other classes shrinking would remove
 #-dontoptimize
 #-dontobfuscate
+-keep class org.osmdroid.** { *; }
+-dontwarn org.osmdroid.**

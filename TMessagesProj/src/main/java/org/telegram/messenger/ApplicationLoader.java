@@ -100,7 +100,7 @@ public class ApplicationLoader extends Application {
     }
 
     protected IMapsProvider onCreateMapsProvider() {
-        return new GoogleMapsProvider();
+        return new OsmMapsProvider();
     }
 
     public static PushListenerController.IPushListenerServiceProvider getPushProvider() {
