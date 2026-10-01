@@ -159,6 +159,7 @@ private:
     int64_t lastPushPingTime = 0;
     int32_t nextPingTimeOffset = 60000 * 3;
     int64_t sendingPushPingTime = 0;
+    int64_t lastSentPushPingTime = 0;
     bool sendingPushPing = false;
     bool sendingPing = false;
     bool updatingDcSettings = false;

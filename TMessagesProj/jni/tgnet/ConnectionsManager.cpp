@@ -230,13 +230,23 @@ void ConnectionsManager::select() {
             if (LOGS_ENABLED) DEBUG_D("push ping timeout");
         }
         if (llabs(now - lastPushPingTime) >= nextPingTimeOffset) {
-            if (LOGS_ENABLED) DEBUG_D("time for push ping");
-            lastPushPingTime = now;
-            uint8_t offset;
-            RAND_bytes(&offset, 1);
-            nextPingTimeOffset = 60000 * 3 + (offset % 40) - 20;
-            if (datacenter != nullptr) {
-                sendPing(datacenter, true);
+            Connection *pushConnection = datacenter != nullptr ? datacenter->getPushConnection(false) : nullptr;
+            if (lastPushPingTime != 0 && pushConnection != nullptr
+                    && pushConnection->getLastEventTime() > lastPushPingTime + 10000
+                    && now - pushConnection->getLastEventTime() < nextPingTimeOffset
+                    && now - lastSentPushPingTime >= nextPingTimeOffset
+                    && now - lastSentPushPingTime + nextPingTimeOffset <= 60 * 7 * 1000) {
+                if (LOGS_ENABLED) DEBUG_D("skipping push ping, socket had recent traffic");
+                lastPushPingTime = now;
+            } else {
+                if (LOGS_ENABLED) DEBUG_D("time for push ping");
+                lastPushPingTime = now;
+                uint8_t offset;
+                RAND_bytes(&offset, 1);
+                nextPingTimeOffset = 60000 * 3 + (offset % 40) - 20;
+                if (datacenter != nullptr) {
+                    sendPing(datacenter, true);
+                }
             }
         }
     }
@@ -1782,6 +1792,7 @@ void ConnectionsManager::sendPing(Datacenter *datacenter, bool usePushConnection
     if (usePushConnection) {
         request->disconnect_delay = 60 * 7;
         sendingPushPingTime = getCurrentTimeMonotonicMillis();
+        lastSentPushPingTime = sendingPushPingTime;
     } else {
         request->disconnect_delay = testBackend ? 10 : 35;
         pingTimeMs = getCurrentTimeMonotonicMillis();

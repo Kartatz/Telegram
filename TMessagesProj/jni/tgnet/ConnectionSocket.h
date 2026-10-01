@@ -40,6 +40,7 @@ protected:
     void onEvent(uint32_t events);
     bool checkTimeout(int64_t now);
     void resetLastEventTime();
+    int64_t getLastEventTime() const { return lastEventTime; }
     bool hasTlsHashMismatch();
     virtual void onReceivedData(NativeByteBuffer *buffer) = 0;
     virtual void onDisconnected(int32_t reason, int32_t error) = 0;
