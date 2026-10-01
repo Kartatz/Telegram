@@ -89,7 +89,7 @@ public class ApplicationLoader extends Application {
     }
 
     protected ILocationServiceProvider onCreateLocationServiceProvider() {
-        return new GoogleLocationProvider();
+        return new LocationManagerProvider();
     }
 
     public static IMapsProvider getMapsProvider() {

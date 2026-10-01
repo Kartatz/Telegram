@@ -67,7 +67,6 @@ public class LocationController extends BaseController implements NotificationCe
     private Boolean servicesAvailable;
     private boolean wasConnectedToPlayServices;
     private ILocationServiceProvider.IMapApiClient apiClient;
-    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private final static long UPDATE_INTERVAL = 1000, FASTEST_INTERVAL = 1000;
     private final static int BACKGROUD_UPDATE_TIME = 30 * 1000;
     private final static int LOCATION_ACQUIRE_TIME = 10 * 1000;
@@ -278,13 +277,6 @@ public class LocationController extends BaseController implements NotificationCe
                     switch (status) {
                         case ILocationServiceProvider.STATUS_SUCCESS:
                             startFusedLocationRequest(true);
-                            break;
-                        case ILocationServiceProvider.STATUS_RESOLUTION_REQUIRED:
-                            Utilities.stageQueue.postRunnable(() -> {
-                                if (!sharingLocations.isEmpty()) {
-                                    AndroidUtilities.runOnUIThread(() -> getNotificationCenter().postNotificationName(NotificationCenter.needShowPlayServicesAlert, status));
-                                }
-                            });
                             break;
                         case ILocationServiceProvider.STATUS_SETTINGS_CHANGE_UNAVAILABLE:
                             Utilities.stageQueue.postRunnable(() -> {

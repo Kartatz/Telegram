@@ -86,7 +86,6 @@ import androidx.core.graphics.ColorUtils;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 
-import com.google.android.gms.common.api.Status;
 import com.google.common.primitives.Longs;
 
 import org.telegram.PhoneFormat.PhoneFormat;
@@ -358,7 +357,6 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
 
     private List<Runnable> onUserLeaveHintListeners = new ArrayList<>();
 
-    private static final int PLAY_SERVICES_REQUEST_CHECK_SETTINGS = 140;
     public static final int SCREEN_CAPTURE_REQUEST_CODE = 520;
     public static final int WEBVIEW_SHARE_API_REQUEST_CODE = 521;
 
@@ -1305,7 +1303,6 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
             .add(NotificationCenter.wasUnableToFindCurrentLocation)
             .add(NotificationCenter.openArticle)
             .add(NotificationCenter.hasNewContactsToImport)
-            .add(NotificationCenter.needShowPlayServicesAlert)
             .add(NotificationCenter.fileLoaded)
             .add(NotificationCenter.fileLoadFailed)
             .add(NotificationCenter.historyImportProgressChanged)
@@ -6622,8 +6619,6 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
                     service.createCaptureDevice(true);
                 }
             }
-        } else if (requestCode == PLAY_SERVICES_REQUEST_CHECK_SETTINGS) {
-            LocationController.getInstance(currentAccount).startFusedLocationRequest(resultCode == Activity.RESULT_OK);
         } else if (requestCode == WEBVIEW_SHARE_API_REQUEST_CODE) {
             if (webviewShareAPIDoneListener != null) {
                 webviewShareAPIDoneListener.run(resultCode == RESULT_OK);
@@ -7445,13 +7440,6 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
                 if (rightActionBarLayout != null) {
                     rightActionBarLayout.animateThemedValues(theme, accentId, nightTheme, instant);
                 }
-            }
-        } else if (id == NotificationCenter.needShowPlayServicesAlert) {
-            try {
-                final Status status = (Status) args[0];
-                status.startResolutionForResult(this, PLAY_SERVICES_REQUEST_CHECK_SETTINGS);
-            } catch (Throwable ignore) {
-
             }
         } else if (id == NotificationCenter.fileLoaded) {
             String path = (String) args[0];
