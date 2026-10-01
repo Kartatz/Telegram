@@ -20,7 +20,6 @@ dependencies {
     implementation project(':TMessagesProj')
     implementation 'androidx.fragment:fragment:1.8.9'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
-    implementation files('../TMessagesProj/libs/libgsaverification-client.aar')
 
     implementation 'com.huawei.hms:push:6.5.0.300'
     implementation 'com.huawei.hms:maps:6.6.0.300'

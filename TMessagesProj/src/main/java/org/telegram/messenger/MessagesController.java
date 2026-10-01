@@ -7207,13 +7207,6 @@ public class MessagesController extends BaseController implements NotificationCe
         return new ArrayList<>(activeVoiceChatsMap.keySet());
     }
 
-    public void setReferer(String referer) {
-        if (referer == null) {
-            return;
-        }
-        installReferer = referer;
-        mainPreferences.edit().putString("installReferer", referer).commit();
-    }
 
     public void putEncryptedChat(TLRPC.EncryptedChat encryptedChat, boolean fromCache) {
         if (encryptedChat == null) {
