@@ -1,6 +1,5 @@
 plugins {
     id 'com.android.application'
-    id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
 }
 apply plugin: 'org.telegram.build-app-plugin'
@@ -15,7 +14,6 @@ configurations {
 }
 
 configurations.all {
-    exclude group: 'com.google.firebase', module: 'firebase-core'
     exclude group: 'androidx.recyclerview', module: 'recyclerview'
 }
 
