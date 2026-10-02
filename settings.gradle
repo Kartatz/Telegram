@@ -15,4 +15,42 @@ dependencyResolutionManagement {
 }
 
 gradle.ext.androidxMediaModulePrefix = 'TMessagesProj_Modules:media3:media-'
-apply from: file("TMessagesProj_Modules/media/core_settings.gradle")
+gradle.ext.androidxMediaSettingsDir = file('TMessagesProj_Modules/media').canonicalPath
+
+def mediaModulePrefix = ':' + gradle.ext.androidxMediaModulePrefix
+def mediaRoot = file('TMessagesProj_Modules/media')
+
+include mediaModulePrefix + 'lib-common'
+project(mediaModulePrefix + 'lib-common').projectDir = new File(mediaRoot, 'libraries/common')
+include mediaModulePrefix + 'lib-container'
+project(mediaModulePrefix + 'lib-container').projectDir = new File(mediaRoot, 'libraries/container')
+include mediaModulePrefix + 'lib-session'
+project(mediaModulePrefix + 'lib-session').projectDir = new File(mediaRoot, 'libraries/session')
+include mediaModulePrefix + 'lib-exoplayer'
+project(mediaModulePrefix + 'lib-exoplayer').projectDir = new File(mediaRoot, 'libraries/exoplayer')
+include mediaModulePrefix + 'lib-exoplayer-dash'
+project(mediaModulePrefix + 'lib-exoplayer-dash').projectDir = new File(mediaRoot, 'libraries/exoplayer_dash')
+include mediaModulePrefix + 'lib-exoplayer-hls'
+project(mediaModulePrefix + 'lib-exoplayer-hls').projectDir = new File(mediaRoot, 'libraries/exoplayer_hls')
+include mediaModulePrefix + 'lib-database'
+project(mediaModulePrefix + 'lib-database').projectDir = new File(mediaRoot, 'libraries/database')
+include mediaModulePrefix + 'lib-datasource'
+project(mediaModulePrefix + 'lib-datasource').projectDir = new File(mediaRoot, 'libraries/datasource')
+include mediaModulePrefix + 'lib-decoder'
+project(mediaModulePrefix + 'lib-decoder').projectDir = new File(mediaRoot, 'libraries/decoder')
+include mediaModulePrefix + 'lib-decoder-ffmpeg'
+project(mediaModulePrefix + 'lib-decoder-ffmpeg').projectDir = new File(mediaRoot, 'libraries/decoder_ffmpeg')
+include mediaModulePrefix + 'lib-extractor'
+project(mediaModulePrefix + 'lib-extractor').projectDir = new File(mediaRoot, 'libraries/extractor')
+include mediaModulePrefix + 'lib-transformer'
+project(mediaModulePrefix + 'lib-transformer').projectDir = new File(mediaRoot, 'libraries/transformer')
+include mediaModulePrefix + 'lib-effect'
+project(mediaModulePrefix + 'lib-effect').projectDir = new File(mediaRoot, 'libraries/effect')
+include mediaModulePrefix + 'lib-muxer'
+project(mediaModulePrefix + 'lib-muxer').projectDir = new File(mediaRoot, 'libraries/muxer')
+include mediaModulePrefix + 'test-utils'
+project(mediaModulePrefix + 'test-utils').projectDir = new File(mediaRoot, 'libraries/test_utils')
+include mediaModulePrefix + 'test-utils-robolectric'
+project(mediaModulePrefix + 'test-utils-robolectric').projectDir = new File(mediaRoot, 'libraries/test_utils_robolectric')
+include mediaModulePrefix + 'test-data'
+project(mediaModulePrefix + 'test-data').projectDir = new File(mediaRoot, 'libraries/test_data')

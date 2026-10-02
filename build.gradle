@@ -6,8 +6,8 @@ buildscript {
         maven { url 'https://developer.huawei.com/repo/' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.13.2'
-        classpath 'com.huawei.agconnect:agcp:1.9.1.301'
+        classpath 'com.android.tools.build:gradle:9.4.1'
+        classpath 'com.huawei.agconnect:agcp:1.9.6.300'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0"
     }
 }
@@ -39,7 +39,7 @@ subprojects {
                     def manifestFile = file("${project.projectDir}/src/main/AndroidManifest.xml")
 
                     if (manifestFile.exists()) {
-                        def manifest = new XmlSlurper().parse(manifestFile)
+                        def manifest = new groovy.xml.XmlSlurper().parse(manifestFile)
                         def manifestPackage = manifest.@package.text()
 
                         if (manifestPackage) {

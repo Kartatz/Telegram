@@ -28,9 +28,6 @@ repositories {
     google()
 }
 
-configurations {
-    compile.exclude module: 'support-v4'
-}
 
 configurations.all {
     exclude group: 'androidx.recyclerview', module: 'recyclerview'
@@ -38,6 +35,7 @@ configurations.all {
 
 dependencies {
     implementation 'androidx.core:core:1.16.0'
+    implementation 'androidx.collection:collection:1.4.2'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.media:media:1.7.0'
     implementation 'androidx.palette:palette:1.0.0'
@@ -108,7 +106,11 @@ android {
         }
     }
 
-    lintOptions {
+    buildFeatures {
+        buildConfig true
+    }
+
+    lint {
         disable 'MissingTranslation'
         disable 'ExtraTranslation'
         disable 'BlockedPrivateApi'

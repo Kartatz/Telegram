@@ -8,9 +8,6 @@ repositories {
     maven { url 'https://developer.huawei.com/repo/' }
 }
 
-configurations {
-    compile.exclude module: 'support-v4'
-}
 
 configurations.all {
     exclude group: 'androidx.recyclerview', module: 'recyclerview'
@@ -34,7 +31,7 @@ android {
 
     sourceSets.main.jniLibs.srcDirs = ['../TMessagesProj/jni/']
 
-    lintOptions {
+    lint {
         disable 'MissingTranslation'
         disable 'ExtraTranslation'
         disable 'BlockedPrivateApi'
@@ -120,19 +117,7 @@ android {
 
     defaultConfig.versionCode = Integer.parseInt(APP_VERSION_CODE)
 
-    applicationVariants.all { variant ->
-        variant.outputs.all { output ->
-            outputFileName = "app-huawei.apk"
-            output.versionCodeOverride = defaultConfig.versionCode * 10 + variant.productFlavors.get(0).abiVersionCode
-        }
-    }
 
-    variantFilter { variant ->
-        def names = variant.flavors*.name
-        if (variant.buildType.name != "release" && !names.contains("afat")) {
-            setIgnore(true)
-        }
-    }
 
     defaultConfig {
         minSdkVersion 21
@@ -158,8 +143,25 @@ android {
     }
     namespace 'org.telegram.messenger.huawei'
 
-    lintOptions {
+    lint {
         checkReleaseBuilds false
     }
 }
 
+androidComponents {
+    beforeVariants(selector().all()) { variant ->
+        variant.enable = variant.buildType == "release" || variant.flavorName == "afat"
+    }
+    onVariants(selector().all()) { variant ->
+        def flavorName = variant.flavorName
+        def abiVersionCode = 0
+        def flavor = flavorName.isEmpty() ? null : android.productFlavors.findByName(flavorName)
+        if (flavor != null) {
+            abiVersionCode = flavor.ext.get('abiVersionCode')
+        }
+        variant.outputs.each { output ->
+            output.outputFileName.set("app-huawei.apk")
+            output.versionCode.set(android.defaultConfig.versionCode * 10 + abiVersionCode)
+        }
+    }
+}
